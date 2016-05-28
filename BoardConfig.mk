@@ -35,7 +35,7 @@ BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_DTBTOOL_ARGS := -2
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8992
-TARGET_KERNEL_CONFIG := blackhawk_libra_defconfig
+TARGET_KERNEL_CONFIG := resurrection_libra_defconfig
 
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
@@ -50,6 +50,7 @@ BOARD_RAMDISK_OFFSET     := 0x02000000
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=libra boot_cpus=0-5
 BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 msm_poweroff.download_mode=0
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE += cpu_max_a53=1632000 cpu_max_a57=2016000
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
@@ -183,6 +184,6 @@ BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += device/xiaomi/libra/cmhw
 
 # Disable Jack & Jill compilation
-ANDROID_COMPILE_WITH_JACK := false
+#ANDROID_COMPILE_WITH_JACK := false
 
 -include vendor/xiaomi/libra/BoardConfigVendor.mk

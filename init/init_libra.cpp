@@ -129,8 +129,8 @@ static void init_target_properties()
         property_set("ro.build.product", "aqua");
         property_set("ro.product.model", "Mi-4s");
         property_set("ro.product.device", "aqua");
-        property_set("ro.build.description", "aqua-user 5.1.1 LMY47V V7.2.5.0.LAJCNDA release-keys");
-        property_set("ro.build.fingerprint", "Xiaomi/aqua/aqua:5.1.1/LMY47V/V7.2.5.0.LAJCNDA:user/release-keys");
+        property_set("ro.build.description", "aqua-user 5.1.1 LMY47V V7.3.1.0.LAJCNDD release-keys");
+        property_set("ro.build.fingerprint", "Xiaomi/aqua/aqua:5.1.1/LMY47V/V7.3.1.0.LAJCNDD:user/release-keys");
     }
 }
 
