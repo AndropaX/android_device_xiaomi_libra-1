@@ -39,7 +39,7 @@ TARGET_KERNEL_CONFIG := resurrection_libra_defconfig
 
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+TARGET_GCC_VERSION_ARM64 := 4.9-kernel
 TARGET_USES_UNCOMPRESSED_KERNEL := true
 
 BOARD_KERNEL_BASE        := 0x00000000
@@ -50,7 +50,7 @@ BOARD_RAMDISK_OFFSET     := 0x02000000
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=libra boot_cpus=0-5
 BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1 msm_poweroff.download_mode=0
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-#BOARD_KERNEL_CMDLINE += cpu_max_a53=1632000 cpu_max_a57=2016000
+BOARD_KERNEL_CMDLINE += cpu_max_a53=1632000 cpu_max_a57=2016000
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
