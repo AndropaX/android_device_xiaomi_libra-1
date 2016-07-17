@@ -14,6 +14,7 @@
 /dev/ttyUSB0              0660   system     system
 /dev/smd0                 0660   system     system
 /dev/smd4                 0660   system     system
+/dev/smd6                 0660   system     system
 /dev/smd7                 0660   bluetooth  bluetooth
 /dev/smd8                 0660   system     system
 /dev/smd_cxm_qmi          0640   radio      radio
