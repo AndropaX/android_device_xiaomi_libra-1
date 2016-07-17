@@ -190,9 +190,6 @@ TARGET_TAP_TO_WAKE_NODE := "/proc/touchscreen/double_tap_enable"
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += device/xiaomi/libra/cmhw
 
-# ANT+
-BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
-
 # Disable Jack & Jill compilation
 #ANDROID_COMPILE_WITH_JACK := false
 
