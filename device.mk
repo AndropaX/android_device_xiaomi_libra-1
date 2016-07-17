@@ -165,11 +165,11 @@ PRODUCT_PACKAGES += \
     libOmxVenc
 
 #ANT+ stack
-PRODUCT_PACKAGES += \
-    com.dsi.ant.antradio_library \
-    AntHalService \
-    libantradio \
-    antradio_app
+#PRODUCT_PACKAGES += \
+#    com.dsi.ant.antradio_library \
+#    AntHalService \
+#    libantradio \
+#    antradio_app
 
 # Audio HAL and utilities
 PRODUCT_PACKAGES += \
