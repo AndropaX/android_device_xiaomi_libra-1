@@ -55,6 +55,9 @@ BOARD_KERNEL_CMDLINE += synaptics_dsx.startup_fw_update=1
 
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
+# Kernel modules in rootfs
+NEED_KERNEL_MODULE_ROOT := true
+
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_libra
 TARGET_RECOVERY_DEVICE_MODULES := libinit_libra
@@ -86,7 +89,7 @@ BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
-WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wlan.ko"
+WIFI_DRIVER_MODULE_PATH := "/lib/modules/wlan.ko"
 WIFI_DRIVER_MODULE_NAME := "wlan"
 
 BOARD_USES_SECURE_SERVICES := true
