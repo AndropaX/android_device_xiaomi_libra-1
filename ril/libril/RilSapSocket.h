@@ -17,7 +17,7 @@
 #ifndef RIL_UIM_SOCKET_H_INCLUDED
 #define RIL_UIM_SOCKET_H_INCLUDED
 #define RIL_SHLIB
-#include "ril.h"
+#include "telephony/ril.h"
 #include "RilSocket.h"
 #include <hardware/ril/librilutils/proto/sap-api.pb.h>
 

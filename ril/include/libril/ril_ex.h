@@ -17,7 +17,7 @@
 #ifndef RIL_EX_H_INCLUDED
 #define RIL_EX_H_INCLUDED
 
-#include "ril.h"
+#include <telephony/ril.h>
 #include <telephony/record_stream.h>
 
 #define NUM_ELEMS_SOCKET(a)     (sizeof (a) / sizeof (a)[0])

@@ -30,11 +30,12 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <cutils/properties.h>
 #include "vendor_init.h"
-#include "property_service.h"
 #include "log.h"
 #include "util.h"
 
@@ -115,7 +116,7 @@ static void init_target_properties()
     char hardware[PROP_VALUE_MAX];
     int rc;
 
-    rc = property_get("ro.hardware", hardware);
+    rc = property_get("ro.hardware", hardware, NULL);
     if (!rc || strncmp(hardware, "libra", PROP_VALUE_MAX))
         return;
 

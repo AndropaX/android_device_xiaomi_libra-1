@@ -24,7 +24,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include "ril.h"
+#include <telephony/ril.h>
 #define LOG_TAG "RILD"
 #include <utils/Log.h>
 #include <cutils/properties.h>
@@ -48,7 +48,9 @@ static void usage(const char *argv0) {
     exit(EXIT_FAILURE);
 }
 
+#ifdef QCOM_HARDWARE
 extern char rild[MAX_SOCKET_NAME_LENGTH] __attribute__((weak));
+#endif
 
 extern void RIL_register (const RIL_RadioFunctions *callbacks);
 
@@ -57,6 +59,8 @@ extern void RIL_register_socket (RIL_RadioFunctions *(*rilUimInit)
 
 extern void RIL_onRequestComplete(RIL_Token t, RIL_Errno e,
         void *response, size_t responselen);
+
+extern void RIL_onRequestAck(RIL_Token t);
 
 extern void RIL_setRilSocketName(char *);
 
@@ -76,7 +80,8 @@ extern void RIL_setRilSocketName(char * s) __attribute__((weak));
 static struct RIL_Env s_rilEnv = {
     RIL_onRequestComplete,
     RIL_onUnsolicitedResponse,
-    RIL_requestTimedCallback
+    RIL_requestTimedCallback,
+    RIL_onRequestAck
 };
 
 extern void RIL_startEventLoop();
@@ -103,7 +108,10 @@ void switchUser() {
     char debuggable[PROP_VALUE_MAX];
 
     prctl(PR_SET_KEEPCAPS, 1, 0, 0, 0);
-    setuid(AID_RADIO);
+    if (setresuid(AID_RADIO, AID_RADIO, AID_RADIO) == -1) {
+        RLOGE("setresuid failed: %s", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
 
     struct __user_cap_header_struct header;
     memset(&header, 0, sizeof(header));
@@ -171,6 +179,7 @@ int main(int argc, char **argv) {
         }
     }
 
+#ifdef QCOM_HARDWARE
     if (clientId == NULL) {
         clientId = "0";
     } else if (atoi(clientId) >= MAX_RILDS) {
@@ -184,6 +193,7 @@ int main(int argc, char **argv) {
             RLOGE("Trying to instantiate multiple rild sockets without a compatible libril!");
         }
     }
+#endif
 
     if (rilLibPath == NULL) {
         if ( 0 == property_get(LIB_PATH_PROPERTY, libPath, NULL)) {
@@ -344,15 +354,30 @@ OpenLib:
         argc = make_argv(args, rilArgv);
     }
 
+#ifdef QCOM_HARDWARE
     rilArgv[argc++] = "-c";
     rilArgv[argc++] = clientId;
     RLOGD("RIL_Init argc = %d clientId = %s", argc, rilArgv[argc-1]);
+#endif
 
     // Make sure there's a reasonable argv[0]
     rilArgv[0] = argv[0];
 
     funcs = rilInit(&s_rilEnv, argc, rilArgv);
     RLOGD("RIL_Init rilInit completed");
+
+#ifdef QCOM_HARDWARE
+    if (funcs == NULL) {
+        /* Pre-multi-client qualcomm vendor libraries won't support "-c" either, so
+         * try again without it. This should only happen on ancient qcoms, so raise
+         * a big fat warning
+         */
+        argc -= 2;
+        RLOGE("============= Retrying RIL_Init without a client id. This is only required for very old versions,");
+        RLOGE("============= and you're likely to have more radio breakage elsewhere!");
+        funcs = rilInit(&s_rilEnv, argc, rilArgv);
+    }
+#endif
 
     RIL_register(funcs);
 

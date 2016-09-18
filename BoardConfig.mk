@@ -39,7 +39,7 @@ TARGET_KERNEL_CONFIG := resurrection_libra_defconfig
 
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_GCC_VERSION_ARM64 := 4.9-kernel
+KERNEL_TOOLCHAIN := /home/andropax/RR/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9-kernel/bin
 TARGET_USES_UNCOMPRESSED_KERNEL := true
 
 BOARD_KERNEL_BASE        := 0x00000000
@@ -70,6 +70,7 @@ BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 AUDIO_FEATURE_ENABLED_FLAC_OFFLOAD := true
 AUDIO_FEATURE_ENABLED_SPKR_PROTECTION := true
+USE_XML_AUDIO_POLICY_CONF := 1
 
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
@@ -123,17 +124,19 @@ TARGET_USES_ION := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 MAX_VIRTUAL_DISPLAY_DIMENSION := 2048
+BOARD_USES_ADRENO := true
 
 # Remove opaque check in preparing dirty region
-COMMON_GLOBAL_CFLAGS += -DHWUI_OPENGL_QUIRK
+BOARD_GLOBAL_CFLAGS += -DHWUI_OPENGL_QUIRK
 
 HAVE_ADRENO_SOURCE:= false
 
 OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 
 # RIL
-BOARD_PROVIDES_LIBRIL := true
-BOARD_PROVIDES_RILD := true
+#BOARD_PROVIDES_LIBRIL := true
+#BOARD_PROVIDES_RILD := true
+#TARGET_RIL_VARIANT := caf
 
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
@@ -181,7 +184,7 @@ TARGET_USES_INTERACTION_BOOST := true
 # 32-bit or 64-bit), the following line should be deleted
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 USE_DEVICE_SPECIFIC_CAMERA := true
-COMMON_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
+BOARD_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 
 #Enable peripheral manager
 TARGET_PER_MGR_ENABLED := true
@@ -202,7 +205,10 @@ TARGET_TAP_TO_WAKE_NODE := "/proc/touchscreen/double_tap_enable"
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS += device/xiaomi/libra/cmhw
 
-# Disable Jack & Jill compilation
+#Jack & Jill
 #ANDROID_COMPILE_WITH_JACK := false
+ANDROID_JACK_VM_ARGS := -Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m
+
+MALLOC_SVELTE := true
 
 -include vendor/xiaomi/libra/BoardConfigVendor.mk

@@ -26,8 +26,13 @@ endif
 
 LOCAL_MODULE:= rild
 LOCAL_MODULE_TAGS := optional
+LOCAL_INIT_RC := rild.rc
 
 LOCAL_C_INCLUDES += $(TARGET_OUT_HEADERS)/libril
+
+ifeq ($(BOARD_PROVIDES_LIBRIL),true)
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/..
+endif
 
 include $(BUILD_EXECUTABLE)
 
